@@ -34,10 +34,6 @@ def oligocounter(oligo):
 
     non_atgc = counter - atgc_counter
 
-##    print('Oligo: ', oligo)
-##    print('Total oligo length: ', counter)
-##    print('Non ATGC count: ', non_atgc)
-##    print('GC Content: ', gc_content, '\n')
     return a_counter, t_counter, g_counter, c_counter, u_counter, counter,  gc_counter, gc_content
 
 def reverse_complement(template):
@@ -52,12 +48,8 @@ def reverse_complement(template):
         elif i == 'c':
             reverse += 'g'
         elif i == 'u':
-            reverse += 'a'
-       
+            reverse += 'a'   
 
-##    print('Template: ', template)
-##    print('Reverse complement:', '\n', reverse[::-1])
-##    print( '* => non atgc')
     return reverse[::-1]
 
 #Codon dictionary
@@ -120,7 +112,7 @@ st.image("./img/composites-lab-header.jpg")
 
 #Sidebar for selection of tools
 st.sidebar.write("Tools Selection")
-tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information", "Codon Amino Acid Translator", "DNA & Protein IUPAC Codes"])
+tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information", "Codon Amino Acid Translator"])
 
 
 #Reverse Complement and Oligo Information
@@ -176,16 +168,3 @@ if tool_select == "Codon Amino Acid Translator":
                 st.dataframe(codon_df)
                 st.header("Sequence length")
                 st.header(amino_acid[2])
- 
-#DNA & Protein IUPAC Codes
-
-dna_iupac = pd.DataFrame({'Code':['A', 'T', 'G', 'C', 'U'], 'Base':['Adenine', 'Thymine', 'Guanine', 'Cytosine', 'Uracil(for RNAs)']})
-
-if tool_select == "DNA & Protein IUPAC Codes":
-    st.header("DNA & Protein IUPAC Codes")
-    st.table(dna_iupac)
-    st.dataframe(dna_iupac)
-    
-#Text display of reverse sequence
-#Text display of oligo count
-
