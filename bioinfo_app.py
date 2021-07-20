@@ -120,7 +120,7 @@ st.image("./img/composites-lab-header.jpg")
 
 #Sidebar for selection of tools
 st.sidebar.write("Tools Selection")
-tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information", "DNA & Protein IUPAC Codes", "Codon Amino Acid Translator"])
+tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information", "Codon Amino Acid Translator", "DNA & Protein IUPAC Codes"])
 
 
 #Reverse Complement and Oligo Information
@@ -147,16 +147,7 @@ if tool_select =="Reverse Complement and Oligo Information":
             st.dataframe(oligo_df)
             st.header("GC Content")
             st.dataframe(gc_df)
-   
-            
-#DNA & Protein IUPAC Codes
-
-dna_iupac = pd.DataFrame({'Code':['A', 'T', 'G', 'C', 'U'], 'Base':['Adenine', 'Thymine', 'Guanine', 'Cytosine', 'Uracil(for RNAs)']})
-
-if tool_select == "DNA & Protein IUPAC Codes":
-    st.header("DNA & Protein IUPAC Codes")
-    st.table(dna_iupac)
-    st.dataframe(dna_iupac)
+      
         
 #Codon Amino Acid Translator
 
@@ -186,7 +177,15 @@ if tool_select == "Codon Amino Acid Translator":
                 st.header("Sequence length")
                 st.header(amino_acid[2])
  
+#DNA & Protein IUPAC Codes
 
+dna_iupac = pd.DataFrame({'Code':['A', 'T', 'G', 'C', 'U'], 'Base':['Adenine', 'Thymine', 'Guanine', 'Cytosine', 'Uracil(for RNAs)']})
+
+if tool_select == "DNA & Protein IUPAC Codes":
+    st.header("DNA & Protein IUPAC Codes")
+    st.table(dna_iupac)
+    st.dataframe(dna_iupac)
+    
 #Text display of reverse sequence
 #Text display of oligo count
 
