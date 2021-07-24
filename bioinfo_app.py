@@ -193,7 +193,7 @@ if tool_select == "Codon Amino Acid Translator":
 
 #Sequence Comparison
 if tool_select == "Sequence Comparison":
-    st.header("Sequence Comparison")
+    st.title("Sequence Comparison")
     st.header("First Sequence")
     first_sequence = st.text_area("Paste your First Sequence (5' --> 3') in text box below: ")
     st.header("Second Sequence")
