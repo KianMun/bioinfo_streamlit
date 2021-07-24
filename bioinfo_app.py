@@ -215,8 +215,8 @@ if tool_select == "Sequence Comparison":
             if first_sequence and second_sequence:
                 sequence_compare = seq_compare(first_sequence, second_sequence)
                 st.header("Comparison Results")
-                st.write(sequence_compare[0])
-                st.write(sequence_compare[1])
-                st.write(sequence_compare[2])
-                st.write('\nMatch = +, Mismatch =~, Blank(in between) = *, Trailing Blanks = _') 
+                st.text(sequence_compare[0])
+                st.text(sequence_compare[1])
+                st.text(sequence_compare[2])
+                st.text('\nMatch = +, Mismatch =~, Blank(in between) = *, Trailing Blanks = _') 
                 
