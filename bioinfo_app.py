@@ -197,7 +197,7 @@ if tool_select == "Sequence Comparison":
     st.header("First Sequence")
     first_sequence = st.text_area("Paste your First Sequence (5' --> 3') in text box below: ")
     st.header("Second Sequence")
-    second_sequence = st.text_area("Paste your First Sequence (5' --> 3') in text box below: ")
+    second_sequence = st.text_area("Paste your Second Sequence (5' --> 3') in text box below: ")
     
     if st.button("Compare"):
         if not first_sequence:
