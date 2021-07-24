@@ -106,13 +106,35 @@ def codon_translate(sequence):
     
     return aa_match, sorted(position), length, aa_fullname
 
+#Function for sequence comparison
+def seq_compare(seq_a, seq_b):
+    first_seq = seq_a.lower()
+    second_seq = seq_b.lower()
+    compare =[]
+
+    for i,j in zip(first_seq, second_seq):
+        if i == ' ' or j == ' ':
+            compare.append('*')
+        elif i == j:
+            compare.append('+')
+        elif i != j:
+            compare.append('-')
+
+
+    len_diff = abs(len(first_seq) - len(second_seq))
+    compare.append(len_diff * '_')
+
+                  
+    return first_seq, ''.join(compare), second_seq, compare.count('+'), compare.count('-'), compare.count('*'), len_diff
+
+
 #Title
 st.title("Kian's Bioinformatics Tools")
 st.image("./img/composites-lab-header.jpg")
 
 #Sidebar for selection of tools
 st.sidebar.write("Tools Selection")
-tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information", "Codon Amino Acid Translator"])
+tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information", "Codon Amino Acid Translator", "Sequence Comparison"])
 
 
 #Reverse Complement and Oligo Information
@@ -168,3 +190,33 @@ if tool_select == "Codon Amino Acid Translator":
                 st.dataframe(codon_df)
                 st.header("Sequence length")
                 st.header(amino_acid[2])
+
+#Sequence Comparison
+if tool_select == "Sequence Comparison":
+    st.header("Sequence Comparison")
+    st.header("First Sequence")
+    first_sequence = st.text_area("Paste your First Sequence (5' --> 3') in text box below: ")
+    st.header("Second Sequence")
+    second_sequence = st.text_area("Paste your First Sequence (5' --> 3') in text box below: ")
+    
+    if st.button("Compare"):
+        if not first_sequence:
+            st.error('Please input a sequence in "First Sequence"')
+        elif not second_sequence
+            st.error('Please input a sequence in "Second Sequence"')
+        else:
+            bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.01)
+                bar.progress(percent_complete + 1)
+            bar.empty()
+            st.success("Comparison Done!")
+            
+            if first_sequence and second_sequence:
+                sequence_compare = seq_compare(first_sequence, second_sequence)
+                st.header("Comparison Results")
+                st.write('1st Sequence: ', seq_compare[0])
+                st.write('              ', seq_compare[1])
+                st.write('2nd Sequence: ', seq_compare[2])
+                st.write('\nMatch = +, Mismatch =-, Blank(in between) = *, Trailing Blanks = _') 
+                
