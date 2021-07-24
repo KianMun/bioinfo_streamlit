@@ -202,7 +202,7 @@ if tool_select == "Sequence Comparison":
     if st.button("Compare"):
         if not first_sequence:
             st.error('Please input a sequence in "First Sequence"')
-        elif not second_sequence
+        elif not second_sequence:
             st.error('Please input a sequence in "Second Sequence"')
         else:
             bar = st.progress(0)
