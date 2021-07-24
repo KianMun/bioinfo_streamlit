@@ -125,7 +125,7 @@ def seq_compare(seq_a, seq_b):
     compare.append(len_diff * '_')
 
                   
-    return first_seq, ''.join(compare), second_seq, compare.count('+'), compare.count('-'), compare.count('*'), len_diff
+    return first_seq, ''.join(compare), second_seq, compare.count('+'), compare.count('-'), compare.count('*'), len(first_seq), len(second_seq), len_diff
 
 
 #Title
@@ -222,5 +222,7 @@ if tool_select == "Sequence Comparison":
                 st.write('Matches: ', sequence_compare[3])
                 st.write('Mismatches: ', sequence_compare[4])
                 st.write('Blank(in between): ', sequence_compare[5])
-                st.write('Sequences Length Difference: ', sequence_compare[6])
+                st.write('First Sequence Length: ', sequence_compare[6])
+                st.write('Second Sequence Length: ', sequence_compare[7])
+                st.write('Sequences Length Difference: ', sequence_compare[8])
                 
