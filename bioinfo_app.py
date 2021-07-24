@@ -153,7 +153,7 @@ if tool_select == "Codon Amino Acid Translator":
         else:
             bar = st.progress(0)
             for percent_complete in range(100):
-                time.sleep(0.05)
+                time.sleep(0.01)
                 bar.progress(percent_complete + 1)
             bar.empty()
             st.success("Translation Done!")
