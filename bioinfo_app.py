@@ -118,14 +118,14 @@ def seq_compare(seq_a, seq_b):
         elif i == j:
             compare.append('+')
         elif i != j:
-            compare.append('~')
+            compare.append('-')
 
 
     len_diff = abs(len(first_seq) - len(second_seq))
     compare.append(len_diff * '_')
 
                   
-    return first_seq, ''.join(compare), second_seq, compare.count('+'), compare.count('~'), compare.count('*'), len_diff
+    return first_seq, ''.join(compare), second_seq, compare.count('+'), compare.count('-'), compare.count('*'), len_diff
 
 
 #Title
@@ -218,5 +218,5 @@ if tool_select == "Sequence Comparison":
                 st.text(sequence_compare[0])
                 st.text(sequence_compare[1])
                 st.text(sequence_compare[2])
-                st.text('\nMatch = +, Mismatch =~, Blank(in between) = *, Trailing Blanks = _') 
+                st.text('\nMatch = + , Mismatch = - , Blank(in between) = * , Trailing Blanks = _ ') 
                 
