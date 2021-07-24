@@ -219,9 +219,8 @@ if tool_select == "Sequence Comparison":
                 st.text(sequence_compare[1])
                 st.text(sequence_compare[2])
                 st.text('Match = + , Mismatch = - , Blank(in between) = * , Trailing Blanks = _ ')
-                st.write('Matches: ')
-                st.write(sequence[3])
-                st.write('Mismatches: ', sequence[4])
-                st.write('Blank(in between): ', sequence[5])
-                st.write('Sequences Length Difference: ', sequence[6])
+                st.write('Matches: ', sequence_compare[3])
+                st.write('Mismatches: ', sequence_compare[4])
+                st.write('Blank(in between): ', sequence_compare[5])
+                st.write('Sequences Length Difference: ', sequence_compare[6])
                 
