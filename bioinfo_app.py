@@ -139,7 +139,7 @@ tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and 
 
 #Reverse Complement and Oligo Information
 if tool_select =="Reverse Complement and Oligo Information":
-    st.header("Reverse Complement and Oligo Information")
+    st.title("Reverse Complement and Oligo Information")
     user_input = st.text_area("Paste sequence (5' ---> 3') in text box below: ")
 
     if st.button("Process"):
@@ -151,8 +151,7 @@ if tool_select =="Reverse Complement and Oligo Information":
             rev_seq = reverse_complement(user_input)
             oligo_content = list(oligocounter(user_input))
             st.header("Reverse Complement(5' ---> 3')")
-            st.header(rev_seq)
-            #st.dataframe(pd.DataFrame({"Reverse Complement(5' ---> 3')":[rev_seq]}))
+            st.write(rev_seq)
             oligo_df = pd.DataFrame({'Content':['A', 'T', 'G', 'C', 'U', 'Total Length'],
                                      'Count':[oligo_content[0], oligo_content[1], oligo_content[2], oligo_content[3],
                                               oligo_content[4], oligo_content[5]]})
