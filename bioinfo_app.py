@@ -213,7 +213,7 @@ if tool_select == "Sequence Comparison":
             
             if first_sequence and second_sequence:
                 sequence_compare = seq_compare(first_sequence, second_sequence)
-                st.subheader("Comparison Results")
+                st.header("Comparison Results")
                 st.text(sequence_compare[0])
                 st.text(sequence_compare[1])
                 st.text(sequence_compare[2])
