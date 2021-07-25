@@ -189,7 +189,7 @@ if tool_select == "Codon Amino Acid Translator":
                 st.subheader("Amino Acid Results Table")
                 st.dataframe(codon_df)
                 st.subheader("Sequence length")
-                st.subheader(amino_acid[2])
+                st.write(amino_acid[2])
 
 #Sequence Comparison
 if tool_select == "Sequence Comparison":
