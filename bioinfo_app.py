@@ -150,6 +150,7 @@ if tool_select =="Reverse Complement and Oligo Information":
         else:
             rev_seq = reverse_complement(user_input)
             oligo_content = list(oligocounter(user_input))
+            st.header("Results")
             st.subheader("Reverse Complement(5' ---> 3')")
             st.text(rev_seq)
             oligo_df = pd.DataFrame({'Content':['A', 'T', 'G', 'C', 'U', 'Total Length'],
