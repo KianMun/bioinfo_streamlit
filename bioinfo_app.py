@@ -165,7 +165,7 @@ if tool_select =="Reverse Complement and Oligo Information":
 #Codon Amino Acid Translator
 
 if tool_select == "Codon Amino Acid Translator":
-    st.header("Codon Amino Acid Translator")
+    st.title("Codon Amino Acid Translator")
     codon_user_input = st.text_area("Paste sequence (5' --> 3') in text box below: ")
 
     if st.button("Translate"):
@@ -185,10 +185,10 @@ if tool_select == "Codon Amino Acid Translator":
                 am_full = amino_acid[3]
                 d = {'Codon Position': codon_pos, 'Amino Acid Shortform': am_a, 'Amino Acid Fullname': am_full}
                 codon_df = pd.DataFrame(d)
-                st.header("Amino Acid Results Table")
+                st.subheader("Amino Acid Results Table")
                 st.dataframe(codon_df)
-                st.header("Sequence length")
-                st.header(amino_acid[2])
+                st.subheader("Sequence length")
+                st.subheader(amino_acid[2])
 
 #Sequence Comparison
 if tool_select == "Sequence Comparison":
@@ -213,7 +213,7 @@ if tool_select == "Sequence Comparison":
             
             if first_sequence and second_sequence:
                 sequence_compare = seq_compare(first_sequence, second_sequence)
-                st.header("Comparison Results")
+                st.subheader("Comparison Results")
                 st.text(sequence_compare[0])
                 st.text(sequence_compare[1])
                 st.text(sequence_compare[2])
