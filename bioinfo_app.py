@@ -185,6 +185,7 @@ if tool_select == "Codon Amino Acid Translator":
                 am_full = amino_acid[3]
                 d = {'Codon Position': codon_pos, 'Amino Acid Shortform': am_a, 'Amino Acid Fullname': am_full}
                 codon_df = pd.DataFrame(d)
+                st.header("Translation Results")
                 st.subheader("Amino Acid Results Table")
                 st.dataframe(codon_df)
                 st.subheader("Sequence length")
