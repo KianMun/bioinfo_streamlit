@@ -71,6 +71,7 @@ if tool_select == "Codon Amino Acid Translator":
                 codon_df = pd.DataFrame(d)
                 st.header("Translation Results")
                 st.subheader("Amino Acid Results Table")
+                st.text("Table is scrollable")
                 st.dataframe(codon_df)
                 st.write("Sequence length: ", amino_acid[2])
                 
