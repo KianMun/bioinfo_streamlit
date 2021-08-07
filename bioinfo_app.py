@@ -1,131 +1,14 @@
 import streamlit as st
 import pandas as pd
 import time
+from collections import Counter
 
-def oligocounter(oligo):
-    atgc_counter = 0
-    a_counter = 0
-    t_counter = 0
-    g_counter = 0
-    c_counter = 0
-    u_counter = 0
-    counter = len(oligo)
-    gc_counter = g_counter + c_counter
-    gc_content = 0
+from codon_translate import codon_translate
+from frequent_kmer import freq_kmer
+from reverse_complement import reverse_complement
+from seq_compare import seq_compare
+from oligocounter import oligocounter
 
-    for i in oligo.lower():
-        if i == 'a':
-            a_counter += 1
-        elif i == 't':
-            t_counter += 1
-        elif i == 'u':
-            u_counter += 1
-        elif i == 'g':
-            g_counter += 1
-        elif i == 'c':
-            c_counter += 1
-        else:
-            atgc_counter += 0
-
-    gc_counter = g_counter + c_counter
-    
-    if gc_counter > 0:
-        gc_content = "{:.2f}".format(gc_counter/counter * 100)
-
-    non_atgc = counter - atgc_counter
-
-    return a_counter, t_counter, g_counter, c_counter, u_counter, counter,  gc_counter, gc_content
-
-def reverse_complement(template):
-    reverse =''
-    for i in template.lower():
-        if i == 'a':
-            reverse += 't'
-        elif i == 't':
-            reverse += 'a'
-        elif i == 'g':
-            reverse += 'c'
-        elif i == 'c':
-            reverse += 'g'
-        elif i == 'u':
-            reverse += 'a'   
-
-    return reverse[::-1]
-
-#Codon dictionary
-codon = {'GCT' : 'Ala','GCC' : 'Ala','GCA': 'Ala', 'GCG': 'Ala', 'TTT' :'Phe','TTC' :'Phe',
-         'TTA' : 'Leu', 'TTG': 'Leu', 'CTT': 'Leu','CTC': 'Leu', 'CTA': 'Leu', 'CTG': 'Leu',
-         'ATT' : 'Ile', 'ATC': 'Ile', 'ATA': 'Ile', 'ATG' : 'Met',
-         'GTT' : 'Val', 'GTC' : 'Val', 'GTA' : 'Val', 'GTG' : 'Val', 'TCT' : 'Ser', 'TCC': 'Ser', 'TCA': 'Ser', 'TCG': 'Ser', 'AGT': 'Ser', 'AGC': 'Ser',
-         'CCT' : 'Pro', 'CCC': 'Pro', 'CCA': 'Pro', 'CCG': 'Pro', 'ACT' : 'Thr', 'ACC' : 'Thr', 'ACA' : 'Thr', 'ACG' : 'Thr',
-         'TAT' : 'Tyr', 'TAC' : 'Tyr', 'TAA' : 'Ter', 'TAG' : 'Ter', 'TGA' : 'Ter', 'CAT' : 'His', 'CAC': 'His',
-         'CAA' : 'Gln', 'CAG' : 'Gln', 'AAT' : 'Asn', 'AAC' : 'Asn', 'AAA' : 'Lys', 'AAG' : 'Lys',
-         'GAT' : 'Asp', 'GAC' : 'Asp', 'GAA' : 'Glu', 'GAG' : 'Glu', 'TGT' : 'Cys', 'TGC' : 'Cys', 'TGG' : 'Trp',
-         'CGT' : 'Arg', 'CGC' : 'Arg', 'CGA' : 'Arg', 'CGG' : 'Arg', 'AGA' : 'Arg', 'AGG' : 'Arg', 'GGT' : 'Gly', 'GGC' : 'Gly', 'GGA' : 'Gly', 'GGG' : 'Gly'}
-
-#Amino acid full name
-amino_acid_full = {'Ala': 'Alanine', 'A':'Alanine', 'Phe':'Phenylalanine', 'F':'Phenylalanine', 'Leu':'Leucine', 'L':'Leucine',
-              'Ile': 'Isoleucine', 'I':'Isoleucine', 'Met': 'Methionine', 'M':'Methionine', 'Val': 'Valine', 'V':'Valine','Ser': 'Serine', 'S':'Serine',
-              'Pro':'Proline', 'P':'Proline', 'Thr': 'Threonine', 'T':'Threonine', 'Tyr': 'Tyrosine', 'Y':'Tyrosine',
-              'Ter': 'Termination', '*': 'Termination', 'His' : 'Histidine', 'H' :'Histidine',
-              'Gln' : 'Glutamine', 'Q' :'Glutamine', 'Asn': 'Asparagine', 'N':'Asparagine', 'Lys': 'Lysine', 'K':'Lysine',
-              'Asp': 'Aspartate' , 'D':'Aspartate', 'Glu': 'Glutamate', 'E':'Glutamate', 'Cys' : 'Cysteine', 'C' :'Cysteine',
-              'Trp': 'Tryptophan', 'W':'Tryptophan', 'Arg': 'Arginine', 'R':'Arginine', 'Gly': 'Glycine', 'G':'Glycine'}
-
-
-#Function to translate codon to amino acid
-def codon_translate(sequence):
-    seq = sequence.upper()
-    seq = seq.replace('U', 'T')
-    seq_threes = []
-    aa_match = []
-    indx = []
-    length = len(sequence)
-    
-    for i in range(0, len(seq),3):
-        seq_threes.append(seq[i:i+3])
-    for amino, code in codon.items():
-        for j in range(len(seq_threes)):
-            if amino == seq_threes[j]:
-                aa_match.append(code)
-                indx.append(j)
-                
-    position = [k +(k*2 + 1) if k>0 else k + 1  for k in indx]
-    aa_match = [x for _, x in sorted(zip(indx, aa_match))]
-
-    aa_fullname = []
-    fullname_indx = []
-    
-    for k, v in amino_acid_full.items():
-        for l in range(len(aa_match)):
-            if k  == aa_match[l]:
-                aa_fullname.append(v)
-                fullname_indx.append(l)
-
-    aa_fullname = [y for _, y in sorted(zip(fullname_indx, aa_fullname))]
-    
-    return aa_match, sorted(position), length, aa_fullname
-
-#Function for sequence comparison
-def seq_compare(seq_a, seq_b):
-    first_seq = seq_a.lower()
-    second_seq = seq_b.lower()
-    compare =[]
-
-    for i,j in zip(first_seq, second_seq):
-        if i == ' ' or j == ' ':
-            compare.append('*')
-        elif i == j:
-            compare.append('+')
-        elif i != j:
-            compare.append('-')
-
-
-    len_diff = abs(len(first_seq) - len(second_seq))
-    compare.append(len_diff * '_')
-
-                  
-    return first_seq, ''.join(compare), second_seq, compare.count('+'), compare.count('-'), compare.count('*'), len(first_seq), len(second_seq), len_diff
 
 
 #Title
@@ -134,7 +17,7 @@ st.image("./img/composites-lab-header.jpg")
 
 #Sidebar for selection of tools
 st.sidebar.write("Tools Selection")
-tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information", "Codon Amino Acid Translator", "Sequence Comparison"])
+tool_select = st.sidebar.selectbox('Select Your Tool', ["Reverse Complement and Oligo Information",  "Codon Amino Acid Translator","Sequence Comparison", "Frequent K-mer"])
 
 
 #Reverse Complement and Oligo Information
@@ -227,3 +110,27 @@ if tool_select == "Sequence Comparison":
                 st.write('Second Sequence Length: ', sequence_compare[7])
                 st.write('Sequences Length Difference: ', sequence_compare[8])
                 
+#Frequent K-mer
+if tool_select == "Frequent K-mer":
+    st.header("Frequent K-mer")
+    seq_input = st.text_area("Paste sequence (5' --> 3') in text box below: ")
+    k_num = st.selectbox('Select K length', [1,2,3,4,5,6,7,8,9,10])
+                         
+    if st.button("Search"):
+        if not seq_input:
+            st.error("Please input a sequence")
+        else:
+            bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.05)
+                bar.progress(percent_complete + 1)
+            bar.empty()
+            st.success("Search Done!")
+            if seq_input:
+                kmer = freq_kmer(seq_input, k_num)
+                kmer_table = pd.DataFrame.from_dict(kmer[0], orient='index', columns=["Count"])
+                st.header("Frequent K-mer Chart")
+                st.bar_chart(kmer_table)
+                st.header("Frequent K-mer Table")
+                st.text('Table is scrollable. Click on "Count" to sort.')
+                st.write(kmer_table)
