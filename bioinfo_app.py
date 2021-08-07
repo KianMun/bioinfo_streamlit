@@ -135,3 +135,4 @@ if tool_select == "Frequent K-mer":
                 st.header("Frequent K-mer Table")
                 st.text('Table is scrollable. Click on "Count" to sort.')
                 st.write(kmer_table)
+                st.write("Input Sequence Length: ", kmer[3])
